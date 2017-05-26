@@ -1,12 +1,15 @@
 'use strict';
 
-var assign = require('object-assign');
+const {keys} = Object;
 
-module.exports = function omit(obj, fields) {
-  var copy = assign({}, obj);
-  for (var i = 0; i < fields.length; i++) {
-    var key = fields[i];
-    delete copy[key];
-  }
+module.exports = (obj, fields = []) => {
+  let copy = {};
+  keys(obj).filter(
+    key => !fields.some(
+      field => field === key
+    )
+  ).forEach(
+    key => copy[key] = obj[key]
+  );
   return copy;
 };
